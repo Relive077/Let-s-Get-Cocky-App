@@ -1,4 +1,4 @@
-package app.web.relive.letsgetcocky
+package app.web.relive.letsgetcocky.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,8 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import app.web.relive.letsgetcocky.ui.theme.LetsGetCockyTheme
+import app.web.relive.letsgetcocky.presentation.theme.LetsGetCockyTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

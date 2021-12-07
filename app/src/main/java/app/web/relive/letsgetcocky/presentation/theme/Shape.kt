@@ -1,4 +1,4 @@
-package app.web.relive.letsgetcocky.ui.theme
+package app.web.relive.letsgetcocky.presentation.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

@@ -1,4 +1,4 @@
-package app.web.relive.letsgetcocky.ui.theme
+package app.web.relive.letsgetcocky.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
