@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import app.web.relive.letsgetcocky.presentation.screens.alcoholic.AlcoholicCocktailListScreen
 import app.web.relive.letsgetcocky.presentation.screens.nonAlcoholic.NonAlcoholicCocktailListScreen
@@ -23,11 +24,9 @@ import app.web.relive.letsgetcocky.presentation.theme.*
 import app.web.relive.letsgetcocky.presentation.theme.Gray900
 
 @Composable
-fun HomeScreen(
-   navController: NavController,
-   homeViewModel: HomeViewModel = hiltViewModel()
-) {
+fun HomeScreen() {
 
+   val homeViewModel = HomeViewModel()
    val selectedTab by homeViewModel.selectedTab
    val tabs = HomeScreenState.values()
 

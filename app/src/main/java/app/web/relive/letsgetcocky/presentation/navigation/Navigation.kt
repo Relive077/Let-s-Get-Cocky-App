@@ -24,7 +24,7 @@ fun Navigation() {
         composable(
             route = ScreenRoutes.HomeScreen.route
         ) {
-            HomeScreen(navController)
+            HomeScreen()
         }
         composable(
             route = ScreenRoutes.AlcoholicCocktailListScreen.route

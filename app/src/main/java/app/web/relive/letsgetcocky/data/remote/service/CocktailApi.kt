@@ -7,7 +7,7 @@ import retrofit2.http.Query
 interface CocktailApi {
 
     @GET("/api/json/v1/1/filter.php")
-    fun getCocktailList(
+    suspend fun getCocktailList(
         @Query("a") drinkType: String
     ): CocktailListResponse
 
