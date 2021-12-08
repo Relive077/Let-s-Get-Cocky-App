@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Let\'s Get Cocky</string>
+    <string name="alcoholic">Alcoholic</string>
+    <string name="non_alcoholic">Non Alcoholic</string>
+    <string name="search">Search</string>
+    <string name="save">Save</string>
 </resources>

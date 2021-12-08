@@ -12,3 +12,13 @@ val Teal700 = Color(0xFF027267)
 
 val Gray100 = Color(0xFFF5F5F5)
 val Gray900 = Color(0xFF212121)
+
+val bottomNavBar = Color(0xFF950101)
+val bottomNavBarSelectedTab = Color(0xFFFF0000)
+
+//DarkTheme
+val levelFourDark = Color(0xFF2A0944)
+val levelThreeDark = Color(0xFF3B185F)
+val levelTwoDark = Color(0xFFA12568)
+val levelOneDark = Color(0xFFFEC260)
+val notSelectedDark = Color(0xFF3E2C41)
