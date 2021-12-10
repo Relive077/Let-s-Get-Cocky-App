@@ -1,18 +1,17 @@
 package app.web.relive.letsgetcocky.data.remote.response
 
-import app.web.relive.letsgetcocky.domain.model.CocktailDetailedItem
-import app.web.relive.letsgetcocky.domain.model.CocktailItem
+import app.web.relive.letsgetcocky.domain.model.CocktailSearchItem
 import com.google.gson.annotations.SerializedName
 
-data class CocktailDetailedItemResponse(
+data class CocktailSearchItemResponse(
     @SerializedName("strDrink") val strDrink: String,
     @SerializedName("strDrinkThumb") val strDrinkThumb: String,
     @SerializedName("idDrink") val idDrink: String,
     @SerializedName("strInstructions") val strInstructions: String?
 )
 
-fun CocktailDetailedItemResponse.toCocktailDetailedItem(): CocktailDetailedItem {
-    return CocktailDetailedItem(
+fun CocktailSearchItemResponse.toCocktailSearchItem(): CocktailSearchItem {
+    return CocktailSearchItem(
         strDrink = strDrink,
         strDrinkThumb = strDrinkThumb,
         idDrink = idDrink,

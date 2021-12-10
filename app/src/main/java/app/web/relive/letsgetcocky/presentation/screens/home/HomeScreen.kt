@@ -1,6 +1,7 @@
 package app.web.relive.letsgetcocky.presentation.screens.home
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,8 @@ import app.web.relive.letsgetcocky.presentation.screens.search.SearchCocktailScr
 import app.web.relive.letsgetcocky.presentation.theme.*
 import app.web.relive.letsgetcocky.presentation.theme.Gray900
 
+@ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun HomeScreen() {
 

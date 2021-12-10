@@ -1,6 +1,6 @@
 package app.web.relive.letsgetcocky.domain.model
 
-data class CocktailDetailedItem(
+data class CocktailSearchItem(
     val strDrink: String,
     val strDrinkThumb: String,
     val idDrink: String,

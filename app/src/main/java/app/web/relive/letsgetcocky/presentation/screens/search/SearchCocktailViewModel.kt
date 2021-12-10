@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.web.relive.letsgetcocky.data.remote.common.Resource
-import app.web.relive.letsgetcocky.domain.usecase.GetCocktailDetailedUseCase
+import app.web.relive.letsgetcocky.domain.usecase.SearchCocktailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchCocktailViewModel @Inject constructor(
-    private val getCocktailDetailedUseCase: GetCocktailDetailedUseCase
+    private val searchCocktailUseCase: SearchCocktailUseCase
 ): ViewModel() {
 
     ///////////////////////////////////// Search Text /////////////////////////////////////////////////
@@ -25,29 +25,29 @@ class SearchCocktailViewModel @Inject constructor(
     fun updateSearchWidgetTextState(newSearchWidgetTextState: String) {
         _searchWidgetTextState.value = newSearchWidgetTextState
 
-        if (_searchWidgetTextState.value.length>2) {
+        if (_searchWidgetTextState.value.length>=3) {
             getCocktailDetailedList(_searchWidgetTextState.value)
         }
     }
 
     //////////////////////////////// Cocktail Detailed List ///////////////////////////////////////////
 
-    private val _cocktailDetailedListState = mutableStateOf(CocktailDetailedListState())
-    val cocktailDetailedListState: State<CocktailDetailedListState> = _cocktailDetailedListState
+    private val _cocktailDetailedListState = mutableStateOf(SearchCocktailListState())
+    val searchCocktailListState: State<SearchCocktailListState> = _cocktailDetailedListState
 
     fun getCocktailDetailedList(searchString: String) {
-        getCocktailDetailedUseCase(searchString).onEach { result ->
+        searchCocktailUseCase(searchString).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _cocktailDetailedListState.value = CocktailDetailedListState(data = result.data?: emptyList())
+                    _cocktailDetailedListState.value = SearchCocktailListState(data = result.data?: emptyList())
                 }
                 is Resource.Error -> {
                     _cocktailDetailedListState.value =
-                        CocktailDetailedListState(errorMessage = result.message?: "An unexpected error occurred")
+                        SearchCocktailListState(errorMessage = result.message?: "An unexpected error occurred")
                 }
                 is Resource.Loading -> {
                     _cocktailDetailedListState.value =
-                        CocktailDetailedListState(isLoading = true)
+                        SearchCocktailListState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

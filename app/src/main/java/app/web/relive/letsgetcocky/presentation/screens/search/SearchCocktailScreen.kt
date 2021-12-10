@@ -5,16 +5,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -23,15 +16,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import app.web.relive.letsgetcocky.R
-import app.web.relive.letsgetcocky.domain.model.CocktailDetailedItem
-import app.web.relive.letsgetcocky.domain.model.CocktailItem
-import app.web.relive.letsgetcocky.presentation.screens.alcoholic.AlcoholicCocktailListItem
+import app.web.relive.letsgetcocky.domain.model.CocktailSearchItem
 import app.web.relive.letsgetcocky.presentation.screens.alcoholic.LottieWithDesc
 import app.web.relive.letsgetcocky.presentation.theme.listItemBack
 import coil.compose.rememberImagePainter
@@ -51,17 +40,17 @@ fun SearchCocktailScreen(
             })
 
         LazyColumn() {
-            items(viewModel.cocktailDetailedListState.value.data) {cocktailDetailedItem ->
-                CocktailDetailedItem(cocktailDetailedItem = cocktailDetailedItem)
+            items(viewModel.searchCocktailListState.value.data) { cocktailDetailedItem ->
+                CocktailDetailedItem(cocktailSearchItem = cocktailDetailedItem)
             }
         }
 
-        if (viewModel.cocktailDetailedListState.value.errorMessage.isNotBlank()) {
+        if (viewModel.searchCocktailListState.value.errorMessage.isNotBlank()) {
             LottieWithDesc(
                 R.raw.no_internet_connection,
-                viewModel.cocktailDetailedListState.value.errorMessage)
+                viewModel.searchCocktailListState.value.errorMessage)
         }
-        if (viewModel.cocktailDetailedListState.value.isLoading) {
+        if (viewModel.searchCocktailListState.value.isLoading) {
             LottieWithDesc(R.raw.loading_beer, "")
         }
 
@@ -71,7 +60,7 @@ fun SearchCocktailScreen(
 
 @Composable
 fun CocktailDetailedItem(
-    cocktailDetailedItem: CocktailDetailedItem
+    cocktailSearchItem: CocktailSearchItem
 ) {
     Card(
         backgroundColor = listItemBack,
@@ -86,14 +75,14 @@ fun CocktailDetailedItem(
                 .padding(10.dp)
         ) {
 
-            Image(painter = rememberImagePainter(cocktailDetailedItem.strDrinkThumb),
-                contentDescription = cocktailDetailedItem.strDrink,
+            Image(painter = rememberImagePainter(cocktailSearchItem.strDrinkThumb),
+                contentDescription = cocktailSearchItem.strDrink,
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp,20.dp,20.dp,20.dp))
                     .height(200.dp)
                     .width(200.dp))
 
-            Text(text = cocktailDetailedItem.strDrink,
+            Text(text = cocktailSearchItem.strDrink,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 15.sp,
@@ -123,7 +112,7 @@ fun SearchAppBar(
                 modifier = Modifier
                     .alpha(ContentAlpha.medium),
                 text = "Search here...",
-                color = Color.Black
+                color = Color.White
             )
         },
         textStyle = TextStyle(
@@ -132,8 +121,8 @@ fun SearchAppBar(
         singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             backgroundColor = Color.Transparent,
-            cursorColor = Color.Black.copy(alpha = ContentAlpha.medium),
-            textColor = Color.Black
+            cursorColor = Color.White.copy(alpha = ContentAlpha.medium),
+            textColor = Color.White
         )
     )
 

@@ -1,6 +1,9 @@
 package app.web.relive.letsgetcocky.presentation.screens.nonAlcoholic
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +13,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +33,7 @@ import app.web.relive.letsgetcocky.presentation.theme.listItemBack
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.*
 
+@ExperimentalAnimationApi
 @Composable
 fun NonAlcoholicCocktailListScreen(
     viewModel: NonAlcoholicCocktailListViewModel = hiltViewModel()
@@ -46,15 +53,21 @@ fun NonAlcoholicCocktailListScreen(
     }
 }
 
+@ExperimentalAnimationApi
 @Composable
 fun NonAlcoholicCocktailListItem(
     cocktailItem: CocktailItem
 ) {
+    var isClicked by rememberSaveable {
+        mutableStateOf(false)
+    }
+
     Card(
         backgroundColor = listItemBack,
         modifier = Modifier
-            .clip(RoundedCornerShape(50.dp,0.dp,50.dp,0.dp))
+            .clip(RoundedCornerShape(50.dp, 0.dp, 50.dp, 0.dp))
             .padding(15.dp)
+            .clickable { isClicked = !isClicked }
     ) {
 
         Row(
@@ -63,18 +76,24 @@ fun NonAlcoholicCocktailListItem(
                 .padding(10.dp)
         ) {
 
-            Image(painter = rememberImagePainter(cocktailItem.strDrinkThumb),
-                contentDescription = cocktailItem.strDrink,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(20.dp,20.dp,20.dp,20.dp))
-                    .height(200.dp)
-                    .width(200.dp))
+            AnimatedVisibility(visible = isClicked) {
+
+                Image(painter = rememberImagePainter(cocktailItem.strDrinkThumb),
+                    contentDescription = cocktailItem.strDrink,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(20.dp,20.dp,20.dp,20.dp))
+                        .height(200.dp)
+                        .width(200.dp))
+
+            }
+
 
             Text(text = cocktailItem.strDrink,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 15.sp,
-                modifier = Modifier.align(Alignment.CenterVertically)
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
                     .padding(20.dp)
             )
         }
