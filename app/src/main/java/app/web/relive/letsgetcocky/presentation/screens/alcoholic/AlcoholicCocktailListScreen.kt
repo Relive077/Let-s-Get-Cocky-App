@@ -14,7 +14,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,9 +22,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import app.web.relive.letsgetcocky.R
-import app.web.relive.letsgetcocky.domain.model.CocktailItem
-import app.web.relive.letsgetcocky.presentation.theme.favoriteColor
-import app.web.relive.letsgetcocky.presentation.theme.listItemBack
+import app.web.relive.letsgetcocky.domain.model.AlcoholicCocktailItem
+import app.web.relive.letsgetcocky.presentation.theme.*
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.*
 
@@ -37,9 +35,9 @@ fun AlcoholicCocktailListScreen(
     LazyColumn {
         items(viewModel.alcoholicCocktailListState.value.data) {cocktailItem ->
             AlcoholicCocktailListItem(
-                cocktailItem = cocktailItem,
-                onSave = { viewModel.saveCocktailItem(cocktailItem) }
-                )
+                alcoholicCocktailItem = cocktailItem,
+                onSaveAlcoholicCocktailItem = { viewModel.updateAlcoholicCocktail(cocktailItem) }
+            )
         }
     }
 
@@ -55,8 +53,8 @@ fun AlcoholicCocktailListScreen(
 @ExperimentalAnimationApi
 @Composable
 fun AlcoholicCocktailListItem(
-    cocktailItem: CocktailItem,
-    onSave: ()-> Unit
+    alcoholicCocktailItem: AlcoholicCocktailItem,
+    onSaveAlcoholicCocktailItem: ()->Unit
 ) {
     var isExpanded by rememberSaveable {
         mutableStateOf(false)
@@ -78,8 +76,8 @@ fun AlcoholicCocktailListItem(
 
             AnimatedVisibility(visible = isExpanded) {
 
-                Image(painter = rememberImagePainter(cocktailItem.strDrinkThumb),
-                    contentDescription = cocktailItem.strDrink,
+                Image(painter = rememberImagePainter(alcoholicCocktailItem.strDrinkThumb),
+                    contentDescription = alcoholicCocktailItem.strDrink,
                     modifier = Modifier
                         .clip(RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
                         .height(200.dp)
@@ -87,18 +85,19 @@ fun AlcoholicCocktailListItem(
             }
 
             IconButton(
-                onClick = {onSave()},
+                onClick = {onSaveAlcoholicCocktailItem()},
                 modifier = Modifier.align(Alignment.CenterVertically)) {
 
                 Icon(painterResource(id = R.drawable.ic_favorite),
                     contentDescription = "Favorite",
-                    tint = favoriteColor)
+                    tint = if(alcoholicCocktailItem.isSaved) favoriteColor else levelThreeDark
+                )
 
 
 
             }
 
-            Text(text = cocktailItem.strDrink,
+            Text(text = alcoholicCocktailItem.strDrink,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 fontSize = 15.sp,

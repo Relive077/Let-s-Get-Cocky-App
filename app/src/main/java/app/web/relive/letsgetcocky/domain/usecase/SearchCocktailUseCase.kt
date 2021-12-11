@@ -13,17 +13,8 @@ class SearchCocktailUseCase @Inject constructor(
     private val cocktailRepository: CocktailRepository
 ) {
 
-    operator fun invoke(searchString: String): Flow<Resource<List<CocktailSearchItem>>> = flow {
-
-        try {
-            emit(Resource.Loading<List<CocktailSearchItem>>())
-            val cocktailSearchList = cocktailRepository.searchCocktail(searchString)
-            emit(Resource.Success<List<CocktailSearchItem>>(cocktailSearchList))
-        } catch (e: HttpException) {
-            emit(Resource.Error<List<CocktailSearchItem>>(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch (e: IOException) {
-            emit(Resource.Error<List<CocktailSearchItem>>("Couldn't reach server. Check your internet connection."))
-        }
+    operator fun invoke(searchString: String): Flow<Resource<List<CocktailSearchItem>?>> {
+        return cocktailRepository.searchCocktail(searchString)
     }
 
 

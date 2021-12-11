@@ -24,4 +24,4 @@ val levelOneDark = Color(0xFFFEC260)
 val notSelectedDark = Color(0xFF3E2C41)
 val listItemBack = Color(0xff916BBF)
 
-val favoriteColor = Color(0xFF78DEC7)
+val favoriteColor = Color(0xFFFF0075)

@@ -2,17 +2,16 @@ package app.web.relive.letsgetcocky.data.local.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import app.web.relive.letsgetcocky.data.local.dao.CocktailDetailsItemDbDao
-import app.web.relive.letsgetcocky.data.local.dao.CocktailItemDbDao
-import app.web.relive.letsgetcocky.data.local.entity.CocktailDetailsItemDb
-import app.web.relive.letsgetcocky.data.local.entity.CocktailItemDb
+import app.web.relive.letsgetcocky.data.local.dao.AlcoholicCocktailItemDbDao
+import app.web.relive.letsgetcocky.data.local.dao.NonAlcoholicCocktailItemDbDao
+import app.web.relive.letsgetcocky.data.local.entity.AlcoholicCocktailItemDb
+import app.web.relive.letsgetcocky.data.local.entity.NonAlcoholicCocktailItemDb
 
-@Database(
-  entities = [(CocktailItemDb::class),(CocktailDetailsItemDb::class)],
-  version = 1, exportSchema = false
-)
 
-abstract class AppDatabase : RoomDatabase() {
-  abstract fun cocktailItemDbDao(): CocktailItemDbDao
-  abstract fun cocktailDetailsItemDbDao(): CocktailDetailsItemDbDao
+@Database(entities = [(AlcoholicCocktailItemDb::class),
+    (NonAlcoholicCocktailItemDb::class)], version = 1, exportSchema = false)
+
+abstract class AppDatabase: RoomDatabase() {
+    abstract fun alcoholicCocktailItemDbDao(): AlcoholicCocktailItemDbDao
+    abstract fun nonAlcoholicCocktailItemDbDao(): NonAlcoholicCocktailItemDbDao
 }

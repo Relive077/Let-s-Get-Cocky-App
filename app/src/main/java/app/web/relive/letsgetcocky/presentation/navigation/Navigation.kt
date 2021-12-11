@@ -9,6 +9,8 @@ import androidx.navigation.compose.rememberNavController
 import app.web.relive.letsgetcocky.presentation.screens.alcoholic.AlcoholicCocktailListScreen
 import app.web.relive.letsgetcocky.presentation.screens.home.HomeScreen
 import app.web.relive.letsgetcocky.presentation.screens.nonAlcoholic.NonAlcoholicCocktailListScreen
+import app.web.relive.letsgetcocky.presentation.screens.save.SaveCocktailScreen
+import app.web.relive.letsgetcocky.presentation.screens.search.SearchCocktailScreen
 import app.web.relive.letsgetcocky.presentation.screens.splash.SplashScreen
 
 @ExperimentalMaterialApi
@@ -39,6 +41,16 @@ fun Navigation() {
             route = ScreenRoutes.NonAlcoholicCocktailListScreen.route
         ) {
             NonAlcoholicCocktailListScreen()
+        }
+        composable(
+            route = ScreenRoutes.SearchCocktailScreen.route
+        ) {
+            SearchCocktailScreen()
+        }
+        composable(
+            route = ScreenRoutes.SaveCocktailScreen.route
+        ) {
+            SaveCocktailScreen()
         }
 
 
