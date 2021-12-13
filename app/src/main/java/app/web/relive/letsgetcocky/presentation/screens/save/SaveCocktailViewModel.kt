@@ -6,10 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.web.relive.letsgetcocky.data.remote.common.Resource
 import app.web.relive.letsgetcocky.domain.model.AlcoholicCocktailItem
-import app.web.relive.letsgetcocky.domain.usecase.GetAlcoholicCocktailListUseCase
-import app.web.relive.letsgetcocky.domain.usecase.GetSavedAlcoholicCocktailListUseCase
-import app.web.relive.letsgetcocky.domain.usecase.GetSavedNonAlcoholicCocktailListUseCase
-import app.web.relive.letsgetcocky.domain.usecase.UpdateAlcoholicCocktailUseCase
+import app.web.relive.letsgetcocky.domain.model.CocktailDetailsItem
+import app.web.relive.letsgetcocky.domain.model.NonAlcoholicCocktailItem
+import app.web.relive.letsgetcocky.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SaveCocktailViewModel @Inject constructor(
     private val getSavedAlcoholicCocktailListUseCase: GetSavedAlcoholicCocktailListUseCase,
-    private val getSavedNonAlcoholicCocktailListUseCase: GetSavedNonAlcoholicCocktailListUseCase
+    private val getSavedNonAlcoholicCocktailListUseCase: GetSavedNonAlcoholicCocktailListUseCase,
+    private val unsaveAlcoholicCocktailUseCase: UnsaveAlcoholicCocktailUseCase,
+    private val unsaveNonAlcoholicCocktailUseCase: UnsaveNonAlcoholicCocktailUseCase
 ): ViewModel() {
 
     private val _savedAlcoholicCocktailListState = mutableStateOf(SavedAlcoholicCocktailListState())
@@ -75,6 +76,17 @@ class SaveCocktailViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
+    fun unsaveAlcoholicCocktail(alcoholicCocktailItem: AlcoholicCocktailItem) {
+        viewModelScope.launch {
+            unsaveAlcoholicCocktailUseCase(alcoholicCocktailItem)
+        }
+    }
+
+    fun unsaveNonAlcoholicCocktail(nonAlcoholicCocktailItem: NonAlcoholicCocktailItem) {
+        viewModelScope.launch {
+            unsaveNonAlcoholicCocktailUseCase(nonAlcoholicCocktailItem)
+        }
+    }
 
 
 }

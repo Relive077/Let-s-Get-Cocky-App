@@ -25,3 +25,4 @@ val notSelectedDark = Color(0xFF3E2C41)
 val listItemBack = Color(0xff916BBF)
 
 val favoriteColor = Color(0xFFFF0075)
+val textColor = Color(0xff7D1935)

@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import app.web.relive.letsgetcocky.presentation.screens.alcoholic.AlcoholicCocktailListScreen
+import app.web.relive.letsgetcocky.presentation.screens.detail.CocktailDetailsScreen
 import app.web.relive.letsgetcocky.presentation.screens.home.HomeScreen
 import app.web.relive.letsgetcocky.presentation.screens.nonAlcoholic.NonAlcoholicCocktailListScreen
 import app.web.relive.letsgetcocky.presentation.screens.save.SaveCocktailScreen
@@ -30,17 +31,17 @@ fun Navigation() {
         composable(
             route = ScreenRoutes.HomeScreen.route
         ) {
-            HomeScreen()
+            HomeScreen(navController)
         }
         composable(
             route = ScreenRoutes.AlcoholicCocktailListScreen.route
         ) {
-            AlcoholicCocktailListScreen()
+            AlcoholicCocktailListScreen(navController)
         }
         composable(
             route = ScreenRoutes.NonAlcoholicCocktailListScreen.route
         ) {
-            NonAlcoholicCocktailListScreen()
+            NonAlcoholicCocktailListScreen(navController)
         }
         composable(
             route = ScreenRoutes.SearchCocktailScreen.route
@@ -50,7 +51,12 @@ fun Navigation() {
         composable(
             route = ScreenRoutes.SaveCocktailScreen.route
         ) {
-            SaveCocktailScreen()
+            SaveCocktailScreen(navController)
+        }
+        composable(
+            route = ScreenRoutes.CocktailDetailsScreen.route + "/{idDrink}"
+        ) {
+            CocktailDetailsScreen()
         }
 
 

@@ -15,7 +15,10 @@ interface NonAlcoholicCocktailItemDbDao {
     fun getCompleteNonAlcoholicCocktailItemList(): Flow<List<NonAlcoholicCocktailItemDb>>
 
     @Update
-    suspend fun updateNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb: NonAlcoholicCocktailItemDb)
+    suspend fun saveNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb: NonAlcoholicCocktailItemDb)
+
+    @Update
+    suspend fun unsaveNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb: NonAlcoholicCocktailItemDb)
 
     @Query("SELECT * FROM NonAlcoholicCocktailItemDb WHERE isSaved=1")
     fun getSavedNonAlcoholicCocktailItemList(): Flow<List<NonAlcoholicCocktailItemDb>>

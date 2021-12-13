@@ -5,13 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.web.relive.letsgetcocky.data.remote.common.Resource
-import app.web.relive.letsgetcocky.domain.model.AlcoholicCocktailItem
 import app.web.relive.letsgetcocky.domain.model.NonAlcoholicCocktailItem
-import app.web.relive.letsgetcocky.domain.usecase.GetAlcoholicCocktailListUseCase
 import app.web.relive.letsgetcocky.domain.usecase.GetNonAlcoholicCocktailListUseCase
-import app.web.relive.letsgetcocky.domain.usecase.UpdateAlcoholicCocktailUseCase
-import app.web.relive.letsgetcocky.domain.usecase.UpdateNonAlcoholicCocktailUseCase
-import app.web.relive.letsgetcocky.presentation.screens.alcoholic.AlcoholicCocktailListState
+import app.web.relive.letsgetcocky.domain.usecase.SaveNonAlcoholicCocktailUseCase
+import app.web.relive.letsgetcocky.domain.usecase.UnsaveNonAlcoholicCocktailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class NonAlcoholicCocktailListViewModel @Inject constructor(
     private val getNonAlcoholicCocktailListUseCase: GetNonAlcoholicCocktailListUseCase,
-    private val updateNonAlcoholicCocktailUseCase: UpdateNonAlcoholicCocktailUseCase
+    private val saveNonAlcoholicCocktailUseCase: SaveNonAlcoholicCocktailUseCase,
+    private val unsaveNonAlcoholicCocktailUseCase: UnsaveNonAlcoholicCocktailUseCase
 ): ViewModel() {
 
     private val _nonAlcoholicCocktailListState = mutableStateOf(NonAlcoholicCocktailListState())
@@ -50,9 +48,15 @@ class NonAlcoholicCocktailListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun updateNonAlcoholicCocktail(nonAlcoholicCocktailItem: NonAlcoholicCocktailItem) {
+    fun saveNonAlcoholicCocktail(nonAlcoholicCocktailItem: NonAlcoholicCocktailItem) {
         viewModelScope.launch {
-            updateNonAlcoholicCocktailUseCase(nonAlcoholicCocktailItem)
+            saveNonAlcoholicCocktailUseCase(nonAlcoholicCocktailItem)
+        }
+    }
+
+    fun unsaveNonAlcoholicCocktail(nonAlcoholicCocktailItem: NonAlcoholicCocktailItem) {
+        viewModelScope.launch {
+            unsaveNonAlcoholicCocktailUseCase(nonAlcoholicCocktailItem)
         }
     }
 

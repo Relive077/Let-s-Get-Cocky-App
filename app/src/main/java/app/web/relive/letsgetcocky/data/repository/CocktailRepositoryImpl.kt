@@ -7,9 +7,7 @@ import app.web.relive.letsgetcocky.data.local.entity.NonAlcoholicCocktailItemDb
 import app.web.relive.letsgetcocky.data.local.entity.toAlcoholicCocktailItem
 import app.web.relive.letsgetcocky.data.local.entity.toNonAlcoholicCocktailItem
 import app.web.relive.letsgetcocky.data.remote.common.Resource
-import app.web.relive.letsgetcocky.data.remote.response.toAlcoholicCocktailItemDb
-import app.web.relive.letsgetcocky.data.remote.response.toCocktailSearchItem
-import app.web.relive.letsgetcocky.data.remote.response.toNonAlcoholicCocktailItemDb
+import app.web.relive.letsgetcocky.data.remote.response.*
 import app.web.relive.letsgetcocky.data.remote.service.CocktailApi
 import app.web.relive.letsgetcocky.domain.model.*
 import app.web.relive.letsgetcocky.domain.repository.CocktailRepository
@@ -49,7 +47,11 @@ class CocktailRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateAlcoholicCocktailItemAsFavorite(alcoholicCocktailItemDb: AlcoholicCocktailItemDb) {
-        alcoholicCocktailItemDbDao.updateAlcoholicCocktailItemDb(alcoholicCocktailItemDb)
+        alcoholicCocktailItemDbDao.saveAlcoholicCocktailItemDb(alcoholicCocktailItemDb)
+    }
+
+    override suspend fun updateAlcoholicCocktailItemAsNotFavorite(alcoholicCocktailItemDb: AlcoholicCocktailItemDb) {
+        alcoholicCocktailItemDbDao.unsaveAlcoholicCocktailItemDb(alcoholicCocktailItemDb)
     }
 
     override fun getSavedAlcoholicCocktailList(): Flow<Resource<List<AlcoholicCocktailItem>>> = flow {
@@ -88,7 +90,11 @@ class CocktailRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateNonAlcoholicCocktailItemAsFavorite(nonAlcoholicCocktailItemDb: NonAlcoholicCocktailItemDb) {
-        nonAlcoholicCocktailItemDbDao.updateNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb)
+        nonAlcoholicCocktailItemDbDao.saveNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb)
+    }
+
+    override suspend fun updateNonAlcoholicCocktailItemAsNotFavorite(nonAlcoholicCocktailItemDb: NonAlcoholicCocktailItemDb) {
+        nonAlcoholicCocktailItemDbDao.unsaveNonAlcoholicCocktailItemDb(nonAlcoholicCocktailItemDb)
     }
 
     override fun getSavedNonAlcoholicCocktailList(): Flow<Resource<List<NonAlcoholicCocktailItem>>> = flow {
@@ -109,7 +115,7 @@ class CocktailRepositoryImpl @Inject constructor(
         try {
             emit(Resource.Loading<List<CocktailSearchItem>?>())
             val cocktailSearchList = cocktailApi.
-            getCocktailListBySearch(searchString).drinks?.map { it.toCocktailSearchItem() }
+            getCocktailListBySearchString(searchString).drinks?.map { it.toCocktailSearchItem() }
             emit(Resource.Success<List<CocktailSearchItem>?>(cocktailSearchList))
         } catch (e: HttpException) {
             emit(Resource.Error<List<CocktailSearchItem>?>
@@ -119,5 +125,24 @@ class CocktailRepositoryImpl @Inject constructor(
                 ("Couldn't reach server. Check your internet connection."))
         }
     }
+
+    override fun getCocktailDetails(idDrink: String):
+            Flow<Resource<CocktailDetailsItem>> = flow {
+
+        try {
+            emit(Resource.Loading<CocktailDetailsItem>())
+            val cocktailDetailsList =
+                cocktailApi.getCocktailDetailsById(idDrink).drinks[0].toCocktailDetailsItem()
+            emit(Resource.Success<CocktailDetailsItem>(cocktailDetailsList))
+        } catch (e: HttpException) {
+            emit(Resource.Error<CocktailDetailsItem>
+                (e.localizedMessage ?: "An unexpected error occurred"))
+        } catch (e: IOException) {
+            emit(Resource.Error<CocktailDetailsItem>
+                ("Couldn't reach server. Check your internet connection."))
+        }
+    }
+
+
 
 }

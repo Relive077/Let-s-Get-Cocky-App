@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -21,8 +22,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import app.web.relive.letsgetcocky.R
 import app.web.relive.letsgetcocky.domain.model.AlcoholicCocktailItem
+import app.web.relive.letsgetcocky.presentation.navigation.ScreenRoutes
 import app.web.relive.letsgetcocky.presentation.theme.*
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.*
@@ -30,13 +33,18 @@ import com.airbnb.lottie.compose.*
 @ExperimentalAnimationApi
 @Composable
 fun AlcoholicCocktailListScreen(
+    navController: NavController,
     viewModel: AlcoholicCocktailListViewModel = hiltViewModel()
 ) {
     LazyColumn {
         items(viewModel.alcoholicCocktailListState.value.data) {cocktailItem ->
             AlcoholicCocktailListItem(
                 alcoholicCocktailItem = cocktailItem,
-                onSaveAlcoholicCocktailItem = { viewModel.updateAlcoholicCocktail(cocktailItem) }
+                onSaveAlcoholicCocktailItem = { viewModel.saveAlcoholicCocktail(cocktailItem) },
+                onUnsaveAlcoholicCocktailItem = { viewModel.unsaveAlcoholicCocktail(cocktailItem) },
+                onAlcoholicCocktailItemSelected = { navController.navigate(
+                        ScreenRoutes.CocktailDetailsScreen.route +
+                            "/${cocktailItem.idDrink}") }
             )
         }
     }
@@ -54,7 +62,9 @@ fun AlcoholicCocktailListScreen(
 @Composable
 fun AlcoholicCocktailListItem(
     alcoholicCocktailItem: AlcoholicCocktailItem,
-    onSaveAlcoholicCocktailItem: ()->Unit
+    onSaveAlcoholicCocktailItem: ()->Unit,
+    onUnsaveAlcoholicCocktailItem: ()->Unit,
+    onAlcoholicCocktailItemSelected: ()->Unit
 ) {
     var isExpanded by rememberSaveable {
         mutableStateOf(false)
@@ -63,7 +73,6 @@ fun AlcoholicCocktailListItem(
     Card(
         backgroundColor = listItemBack,
         modifier = Modifier
-            .clip(RoundedCornerShape(50.dp, 0.dp, 50.dp, 0.dp))
             .padding(15.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
@@ -82,18 +91,30 @@ fun AlcoholicCocktailListItem(
                         .clip(RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
                         .height(200.dp)
                         .width(200.dp))
+
+                IconButton(
+                    onClick = { onAlcoholicCocktailItemSelected() },
+                    modifier = Modifier.align(Alignment.CenterVertically)) {
+
+                    Icon(painterResource(id = R.drawable.ic_info),
+                        contentDescription = "Info",
+                        tint = Color.Cyan
+                    )
+
+                }
             }
 
             IconButton(
-                onClick = {onSaveAlcoholicCocktailItem()},
+                onClick = {
+                    if (alcoholicCocktailItem.isSaved) {onUnsaveAlcoholicCocktailItem()}
+                    else {onSaveAlcoholicCocktailItem()}
+                          },
                 modifier = Modifier.align(Alignment.CenterVertically)) {
 
                 Icon(painterResource(id = R.drawable.ic_favorite),
                     contentDescription = "Favorite",
                     tint = if(alcoholicCocktailItem.isSaved) favoriteColor else levelThreeDark
                 )
-
-
 
             }
 

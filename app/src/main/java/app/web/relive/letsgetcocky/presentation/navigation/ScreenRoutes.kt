@@ -7,4 +7,5 @@ sealed class ScreenRoutes(val route: String) {
     object NonAlcoholicCocktailListScreen: ScreenRoutes("non_alcoholic_cocktail_list_screen")
     object SearchCocktailScreen: ScreenRoutes("search_cocktail_screen")
     object SaveCocktailScreen: ScreenRoutes("save_cocktail_screen")
+    object CocktailDetailsScreen: ScreenRoutes("cocktail_details_screen")
 }

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -24,8 +25,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import app.web.relive.letsgetcocky.R
 import app.web.relive.letsgetcocky.domain.model.NonAlcoholicCocktailItem
+import app.web.relive.letsgetcocky.presentation.navigation.ScreenRoutes
 import app.web.relive.letsgetcocky.presentation.theme.*
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.*
@@ -33,13 +36,18 @@ import com.airbnb.lottie.compose.*
 @ExperimentalAnimationApi
 @Composable
 fun NonAlcoholicCocktailListScreen(
+    navController: NavController,
     viewModel: NonAlcoholicCocktailListViewModel = hiltViewModel()
 ) {
     LazyColumn {
         items(viewModel.nonAlcoholicCocktailListState.value.data) {cocktailItem ->
             NonAlcoholicCocktailListItem(
                 nonAlcoholicCocktailItem = cocktailItem,
-                onSaveNonAlcoholicCocktailItem = { viewModel.updateNonAlcoholicCocktail(cocktailItem) }
+                onSaveNonAlcoholicCocktailItem = { viewModel.saveNonAlcoholicCocktail(cocktailItem) },
+                onUnsaveNonAlcoholicCocktailItem = { viewModel.unsaveNonAlcoholicCocktail(cocktailItem) },
+                onNonAlcoholicCocktailItemSelected = { navController.navigate(
+                    ScreenRoutes.CocktailDetailsScreen.route +
+                            "/${cocktailItem.idDrink}") }
             )
         }
     }
@@ -58,7 +66,9 @@ fun NonAlcoholicCocktailListScreen(
 @Composable
 fun NonAlcoholicCocktailListItem(
     nonAlcoholicCocktailItem: NonAlcoholicCocktailItem,
-    onSaveNonAlcoholicCocktailItem: ()->Unit
+    onSaveNonAlcoholicCocktailItem: ()->Unit,
+    onUnsaveNonAlcoholicCocktailItem: ()->Unit,
+    onNonAlcoholicCocktailItemSelected: ()->Unit
 ) {
     var isExpanded by rememberSaveable {
         mutableStateOf(false)
@@ -67,7 +77,6 @@ fun NonAlcoholicCocktailListItem(
     Card(
         backgroundColor = listItemBack,
         modifier = Modifier
-            .clip(RoundedCornerShape(50.dp, 0.dp, 50.dp, 0.dp))
             .padding(15.dp)
             .clickable { isExpanded = !isExpanded }
     ) {
@@ -86,10 +95,24 @@ fun NonAlcoholicCocktailListItem(
                         .clip(RoundedCornerShape(20.dp, 20.dp, 20.dp, 20.dp))
                         .height(200.dp)
                         .width(200.dp))
+
+                IconButton(
+                    onClick = { onNonAlcoholicCocktailItemSelected() },
+                    modifier = Modifier.align(Alignment.CenterVertically)) {
+
+                    Icon(painterResource(id = R.drawable.ic_info),
+                        contentDescription = "Info",
+                        tint = Color.Cyan
+                    )
+
+                }
             }
 
             IconButton(
-                onClick = {onSaveNonAlcoholicCocktailItem()},
+                onClick = {
+                    if (nonAlcoholicCocktailItem.isSaved) {onUnsaveNonAlcoholicCocktailItem()}
+                    else {onSaveNonAlcoholicCocktailItem()}
+                          },
                 modifier = Modifier.align(Alignment.CenterVertically)) {
 
                 Icon(

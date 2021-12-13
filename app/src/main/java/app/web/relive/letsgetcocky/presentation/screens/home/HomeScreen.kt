@@ -27,7 +27,9 @@ import app.web.relive.letsgetcocky.presentation.theme.Gray900
 @ExperimentalMaterialApi
 @ExperimentalAnimationApi
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+   navController: NavController
+) {
 
    val homeViewModel = HomeViewModel()
    val selectedTab by homeViewModel.selectedTab
@@ -64,10 +66,10 @@ fun HomeScreen() {
 
       Crossfade(selectedTab) { destination ->
          when (destination) {
-            HomeScreenState.NON_ALCOHOLIC -> NonAlcoholicCocktailListScreen()
-            HomeScreenState.ALCOHOLIC -> AlcoholicCocktailListScreen()
+            HomeScreenState.NON_ALCOHOLIC -> NonAlcoholicCocktailListScreen(navController)
+            HomeScreenState.ALCOHOLIC -> AlcoholicCocktailListScreen(navController)
             HomeScreenState.SEARCH -> SearchCocktailScreen()
-            HomeScreenState.SAVE -> SaveCocktailScreen()
+            HomeScreenState.SAVE -> SaveCocktailScreen(navController)
 
          }
       }

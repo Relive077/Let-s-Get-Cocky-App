@@ -7,7 +7,7 @@ import app.web.relive.letsgetcocky.domain.repository.CocktailRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class UpdateAlcoholicCocktailUseCase @Inject constructor(
+class SaveAlcoholicCocktailUseCase @Inject constructor(
     private val cocktailRepository: CocktailRepository
 ) {
 

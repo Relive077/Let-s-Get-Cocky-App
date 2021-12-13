@@ -14,7 +14,10 @@ interface AlcoholicCocktailItemDbDao {
     fun getCompleteAlcoholicCocktailItemList(): Flow<List<AlcoholicCocktailItemDb>>
 
     @Update
-    suspend fun updateAlcoholicCocktailItemDb(alcoholicCocktailItemDb: AlcoholicCocktailItemDb)
+    suspend fun saveAlcoholicCocktailItemDb(alcoholicCocktailItemDb: AlcoholicCocktailItemDb)
+
+    @Update
+    suspend fun unsaveAlcoholicCocktailItemDb(alcoholicCocktailItemDb: AlcoholicCocktailItemDb)
 
     @Query("SELECT * FROM AlcoholicCocktailItemDb WHERE isSaved=1")
     fun getSavedAlcoholicCocktailItemList(): Flow<List<AlcoholicCocktailItemDb>>

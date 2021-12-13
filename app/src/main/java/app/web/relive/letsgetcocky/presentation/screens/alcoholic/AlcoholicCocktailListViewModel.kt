@@ -7,7 +7,8 @@ import androidx.lifecycle.viewModelScope
 import app.web.relive.letsgetcocky.data.remote.common.Resource
 import app.web.relive.letsgetcocky.domain.model.AlcoholicCocktailItem
 import app.web.relive.letsgetcocky.domain.usecase.GetAlcoholicCocktailListUseCase
-import app.web.relive.letsgetcocky.domain.usecase.UpdateAlcoholicCocktailUseCase
+import app.web.relive.letsgetcocky.domain.usecase.SaveAlcoholicCocktailUseCase
+import app.web.relive.letsgetcocky.domain.usecase.UnsaveAlcoholicCocktailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,7 +18,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AlcoholicCocktailListViewModel @Inject constructor(
     private val getAlcoholicCocktailListUseCase: GetAlcoholicCocktailListUseCase,
-    private val updateAlcoholicCocktailUseCase: UpdateAlcoholicCocktailUseCase
+    private val saveAlcoholicCocktailUseCase: SaveAlcoholicCocktailUseCase,
+    private val unsaveAlcoholicCocktailUseCase: UnsaveAlcoholicCocktailUseCase
 ): ViewModel() {
 
     private val _alcoholicCocktailListState = mutableStateOf(AlcoholicCocktailListState())
@@ -45,9 +47,15 @@ class AlcoholicCocktailListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun updateAlcoholicCocktail(alcoholicCocktailItem: AlcoholicCocktailItem) {
+    fun saveAlcoholicCocktail(alcoholicCocktailItem: AlcoholicCocktailItem) {
         viewModelScope.launch {
-            updateAlcoholicCocktailUseCase(alcoholicCocktailItem)
+            saveAlcoholicCocktailUseCase(alcoholicCocktailItem)
+        }
+    }
+
+    fun unsaveAlcoholicCocktail(alcoholicCocktailItem: AlcoholicCocktailItem) {
+        viewModelScope.launch {
+            unsaveAlcoholicCocktailUseCase(alcoholicCocktailItem)
         }
     }
 
