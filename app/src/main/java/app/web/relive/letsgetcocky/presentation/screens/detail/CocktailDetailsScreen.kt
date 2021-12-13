@@ -51,7 +51,7 @@ fun CocktailDetailsScreen(
             Text(text = cocktailDetailsItem.strDrink,
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
-                fontSize = 18.sp,
+                fontSize = 20.sp,
                 textAlign = TextAlign.Center,
                 textDecoration = TextDecoration.Underline,
                 modifier = Modifier.fillMaxWidth())
@@ -67,44 +67,60 @@ fun CocktailDetailsScreen(
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 color = textColor,
-                fontSize = 15.sp)
+                fontSize = 18.sp)
             Spacer(modifier = Modifier.height(10.dp))
-            Text(text = cocktailDetailsItem.strInstructions ?: "",fontSize = 12.sp)
+            Text(text = cocktailDetailsItem.strInstructions ?: "",
+                fontSize = 15.sp,
+                lineHeight = 35.sp)
             Spacer(modifier = Modifier.height(30.dp))
             Text(text = "Ingredients",
                 fontWeight = FontWeight.Bold,
                 fontStyle = FontStyle.Italic,
                 color = textColor,
-                fontSize = 15.sp)
+                fontSize = 18.sp)
             Spacer(modifier = Modifier.height(10.dp))
             if(cocktailDetailsItem.strIngredient1!=null && cocktailDetailsItem.strMeasure1!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient1,cocktailDetailsItem.strMeasure1)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient2!=null && cocktailDetailsItem.strMeasure2!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient2,cocktailDetailsItem.strMeasure2)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient3!=null && cocktailDetailsItem.strMeasure3!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient3,cocktailDetailsItem.strMeasure3)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient4!=null && cocktailDetailsItem.strMeasure4!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient4,cocktailDetailsItem.strMeasure4)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient5!=null && cocktailDetailsItem.strMeasure5!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient5,cocktailDetailsItem.strMeasure5)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient6!=null && cocktailDetailsItem.strMeasure6!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient6,cocktailDetailsItem.strMeasure6)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient7!=null && cocktailDetailsItem.strMeasure7!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient7,cocktailDetailsItem.strMeasure7)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient8!=null && cocktailDetailsItem.strMeasure8!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient8,cocktailDetailsItem.strMeasure8)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient9!=null && cocktailDetailsItem.strMeasure9!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient9,cocktailDetailsItem.strMeasure9)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient10!=null && cocktailDetailsItem.strMeasure10!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient10,cocktailDetailsItem.strMeasure10)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient11!=null && cocktailDetailsItem.strMeasure11!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient11,cocktailDetailsItem.strMeasure11)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient12!=null && cocktailDetailsItem.strMeasure12!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient12,cocktailDetailsItem.strMeasure12)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient13!=null && cocktailDetailsItem.strMeasure13!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient13,cocktailDetailsItem.strMeasure13)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient14!=null && cocktailDetailsItem.strMeasure14!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient14,cocktailDetailsItem.strMeasure14)}
+            Spacer(modifier = Modifier.height(5.dp))
             if(cocktailDetailsItem.strIngredient15!=null && cocktailDetailsItem.strMeasure15!=null)
             {IngredientComponent(cocktailDetailsItem.strIngredient15,cocktailDetailsItem.strMeasure15)}
         }
@@ -122,9 +138,9 @@ fun IngredientComponent(
         horizontalArrangement = Arrangement.SpaceEvenly
     ) {
         Text(text = "$ingredientName:",
-            fontSize = 12.sp,
+            fontSize = 15.sp,
             fontWeight = FontWeight.Bold)
-        Text(text = ingredientQuant,fontSize = 12.sp)
+        Text(text = ingredientQuant,fontSize = 15.sp)
     }
 
 }
